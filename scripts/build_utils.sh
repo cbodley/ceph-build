@@ -256,23 +256,18 @@ get_rpm_dist() {
     # creates a DISTRO_VERSION and DISTRO global variable for
     # use in constructing chacra urls for rpm distros
 
-    LSB_RELEASE=/usr/bin/lsb_release
-    [ ! -x $LSB_RELEASE ] && echo unknown && exit
-
-    ID=`$LSB_RELEASE --short --id`
+    source /etc/os-release
 
     case $ID in
     RedHatEnterpriseServer)
-        RELEASE=`$LSB_RELEASE --short --release | cut -d. -f1`
-        DIST=rhel$RELEASE
+        DIST=rhel$VERSION
         DISTRO=rhel
         ;;
-    CentOS)
-        RELEASE=`$LSB_RELEASE --short --release | cut -d. -f1`
-        DIST=el$RELEASE
-        DISTRO=centos
+    centos)
+        DIST=el$VERSION
+        DISTRO=$ID
         ;;
-    Fedora)
+    fedora)
         RELEASE=`$LSB_RELEASE --short --release`
         DISTRO=fedora
         ;;
